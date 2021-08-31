@@ -6,7 +6,11 @@ const cleanOldFiles = (directory = "/uploads", lifetime = 3600000) => {
   const directoryPath = dirPath(directory);
 
   fs.readdir(directoryPath, (err, files) => {
-    console.log({ files });
+    if (err || files.length === 0) {
+      console.log("No files to exclude");
+      return;
+    }
+
     files.forEach((file) => {
       fs.stat(path.join(directoryPath, file), (err, stat) => {
         var endTime, now;

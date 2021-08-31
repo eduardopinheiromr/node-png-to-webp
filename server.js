@@ -16,17 +16,21 @@ app.get("/", (req, res) => {
 });
 
 app.post("/upload", async (req, res) => {
-  cleanOldFiles();
+  try {
+    cleanOldFiles();
 
-  const image = await convertToWebp(req.files);
+    const image = await convertToWebp(req.files);
 
-  if (req.files.image.length > 1) {
-    const filepaths = image.map((name) => baseUrl + "/" + name);
+    if (req.files.image.length > 1) {
+      const filepaths = image.map((name) => baseUrl + "/" + name);
 
-    return res.send(filepaths);
+      return res.send(filepaths);
+    }
+
+    res.send(baseUrl + "/" + image);
+  } catch (error) {
+    res.send({ error });
   }
-
-  res.send(baseUrl + "/" + image);
 });
 
 app.listen(port, () => console.log("Listening at " + baseUrl));
