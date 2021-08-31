@@ -2,7 +2,7 @@ const express = require("express");
 const fileupload = require("express-fileupload");
 
 const app = express();
-const port = process.env.PORT | 3000 | 3001;
+const port = process.env.PORT || 3000 | 3001;
 const baseUrl = "http://localhost:" + port;
 
 const convertToWebp = require("./src/services/convertToWebp");
@@ -10,6 +10,10 @@ const cleanOldFiles = require("./src/utils/cleanOldFiles");
 
 app.use(fileupload());
 app.use(express.static("uploads"));
+
+app.get("/", (req, res) => {
+  res.send("Testando");
+});
 
 app.post("/upload", async (req, res) => {
   cleanOldFiles();
