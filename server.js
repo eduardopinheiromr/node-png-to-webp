@@ -2,7 +2,7 @@ const express = require("express");
 const fileupload = require("express-fileupload");
 
 const app = express();
-const port = 3000 | 3001;
+const port = process.env.PORT | 3000 | 3001;
 const baseUrl = "http://localhost:" + port;
 
 const convertToWebp = require("./src/services/convertToWebp");
